@@ -19,7 +19,7 @@ def estimator(data):
     def infections_by_severe_impact(days):
         infections = more_people()
         infectionsByRequestedTime = infections * math.pow(2, math.floor(days / 3))
-
+        
     return {
         data: {},
         "impact": {
