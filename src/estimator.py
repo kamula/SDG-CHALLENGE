@@ -5,33 +5,31 @@ def estimator(**data):
     impact = {}
     severeImpact = {}
 
-    currentlyInfectedImpact = data['reportedCases'] * 10
-    impact['currentlyInfected'] = currentlyInfectedImpact
+    # calculate the number of currently infected people
+    impact['currentlyInfected'] = data['reportedCases'] * 10
 
-    currentlyInfectedSevere = data['reportedCases'] * 50
-    severeImpact['currentlyInfected'] = currentlyInfectedSevere
+    # severe impact
+    severeImpact['currentlyInfected'] = data['reportedCases'] * 50
 
-    time = data['timeToElapse']
-
+    # calculate the number of infections in days, weeks and months
+    period = data['timeToElapse']
     if data['periodType'] == 'days':
-        infected = currentlyInfectedImpact * (2 ** math.trunc(time/3))
-        impact['infectionsByRequestedTime'] = infected
+        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * (2 ** math.trunc(period / 3))
 
-        severe_infected = currentlyInfectedSevere * (2 ** math.trunc(time/3))
-        severeImpact['infectionsByRequestedTime'] = severe_infected
+        severeImpact['infectionsByRequestedTime'] = severeImpact['currentlyInfected'] * (2 ** math.trunc(period / 3))
+
     elif data['periodType'] == 'weeks':
-        weeks_infections_days = time * 7
-        week_infections = currentlyInfectedImpact * (2 ** math.trunc(weeks_infections_days/3))
-        impact['infectionsByRequestedTime'] = week_infections
+        period_in_days = period * 7
+        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * (2 ** math.trunc(period_in_days / 3))
 
-        severe_week_infections = currentlyInfectedSevere * (2 ** math.trunc(weeks_infections_days/3))
-        severeImpact['infectionsByRequestedTime'] = severe_week_infections
+        # severe impacts
+        severeImpact['infectionsByRequestedTime'] = severeImpact['currentlyInfected'] * (
+                2 ** math.trunc(period_in_days / 3))
 
     elif data['periodType'] == 'months':
-        month_days = time * 30
-        infections_by_month = currentlyInfectedImpact * 2(2**math.trunc(month_days/3))
-        impact['infectionsByRequestedTime'] = infections_by_month
+        month_days = period * 30
+        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * (2 ** math.trunc(month_days / 3))
 
-        severe_months_infections = currentlyInfectedSevere * 2(2**math.trunc(month_days/3))
-        severeImpact['infectionsByRequestedTime'] = severe_months_infections
-
+        # severe impact
+        severeImpact['infectionsByRequestedTime'] = severeImpact['currentlyInfected'] * (
+                    2 ** math.trunc(month_days / 3))
