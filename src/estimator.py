@@ -1,7 +1,9 @@
 import math
 
 
-def estimator(**data):
+def estimator():
+    data = input()
+    
     # calculate number of days
     def days_months_weeks():
         num_days = 0
