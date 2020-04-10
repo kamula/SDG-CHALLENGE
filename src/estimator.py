@@ -6,7 +6,7 @@ def estimator(data):
     trunk = math.trunc(data['reportedCases'])
 
     return {
-        data: data,
+        data: input(),
         "impact": {
             "currentlyInfected": data['reportedCases'] * 10,
             'infectionsByRequestedTime': (data['reportedCases'] * 10) * math.pow(2, trunk)
