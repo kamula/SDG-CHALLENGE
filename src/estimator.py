@@ -1,24 +1,21 @@
 import math
 
 
-def estimator():
-    data = input()
-    
+def estimator(**data):
     # calculate number of days
     def days_months_weeks():
-        num_days = 0
         if data['periodType'] == 'weeks':
-            num_days = data['timeToElapse'] * 7
+            data['timeToElapse'] = data['timeToElapse'] * 7
         elif data['periodType'] == 'months':
-            num_days = data['timeToElapse'] * 30
+            data['timeToElapse'] = data['timeToElapse'] * 30
         else:
-            num_days = data['timeToElapse']
-        return num_days
+            data['timeToElapse'] = data['timeToElapse']
+        return data['timeToElapse']
 
     # calculate power
     def calc_power():
         days = days_months_weeks()
-        power_to_raise = math.trunc(days/3)
+        power_to_raise = math.trunc(days / 3)
         return power_to_raise
 
     def reported_cases_ten():
@@ -28,14 +25,14 @@ def estimator():
         return data['reportedCases'] * 50
 
     def impact_severe():
-        trunk = calc_power()
+        # trunk = calc_power()
         value = reported_cases_ten()
-        return value * math.pow(2, trunk)
+        return value * math.pow(2, calc_power())
 
     def severe_impact():
-        trunk = calc_power()
+        # trunk = calc_power()
         value2 = reported_cases_fifty()
-        return value2 * math.pow(2, trunk)
+        return value2 * math.pow(2, calc_power())
 
     return {
         'impact': {
