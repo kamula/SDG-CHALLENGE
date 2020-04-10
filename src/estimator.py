@@ -24,11 +24,11 @@ def estimator(data):
         data: {},
         "impact": {
             "currentlyInfected": current_infections(),
-            'infectionsByRequestedTime': infections_by_time()
+            'infectionsByRequestedTime': infections_by_time(data['periodType'])
 
         },
         "severeImpact": {
             "currentlyInfected": more_people(),
-            'infectionsByRequestedTime': infections_by_severe_impact()
+            'infectionsByRequestedTime': infections_by_severe_impact(data['periodType'])
         }
     }
