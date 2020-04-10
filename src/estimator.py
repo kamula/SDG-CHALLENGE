@@ -2,46 +2,36 @@ import math
 
 
 def estimator(**data):
-    # calculate number of days
-    def days_months_weeks():
-        if data['periodType'] == 'weeks':
-            data['timeToElapse'] = data['timeToElapse'] * 7
-        elif data['periodType'] == 'months':
-            data['timeToElapse'] = data['timeToElapse'] * 30
-        else:
-            data['timeToElapse'] = data['timeToElapse']
-        return data['timeToElapse']
+    impact = {}
+    severeImpact = {}
 
-    # calculate power
-    def calc_power():
-        days = days_months_weeks()
-        power_to_raise = math.trunc(days / 3)
-        return power_to_raise
+    currentlyInfectedImpact = data['reportedCases'] * 10
+    impact['currentlyInfected'] = currentlyInfectedImpact
 
-    def reported_cases_ten():
-        return data['reportedCases'] * 10
+    currentlyInfectedSevere = data['reportedCases'] * 50
+    severeImpact['currentlyInfected'] = currentlyInfectedSevere
 
-    def reported_cases_fifty():
-        return data['reportedCases'] * 50
+    time = data['timeToElapse']
 
-    def impact_severe():
-        # trunk = calc_power()
-        value = reported_cases_ten()
-        return value * math.pow(2, calc_power())
+    if data['periodType'] == 'days':
+        infected = currentlyInfectedImpact * (2 ** math.trunc(time/3))
+        impact['infectionsByRequestedTime'] = infected
 
-    def severe_impact():
-        # trunk = calc_power()
-        value2 = reported_cases_fifty()
-        return value2 * math.pow(2, calc_power())
+        severe_infected = currentlyInfectedSevere * (2 ** math.trunc(time/3))
+        severeImpact['infectionsByRequestedTime'] = severe_infected
+    elif data['periodType'] == 'weeks':
+        weeks_infections_days = time * 7
+        week_infections = currentlyInfectedImpact * (2 ** math.trunc(weeks_infections_days/3))
+        impact['infectionsByRequestedTime'] = week_infections
 
-    return {
-        'impact': {
-            'currentlyInfected': reported_cases_ten(),
-            'infectionsByRequestedTime': impact_severe()
-        },
-        'severeImpact': {
-            'currentlyInfected': reported_cases_fifty(),
-            'infectionsByRequestedTime': severe_impact()
-        }
+        severe_week_infections = currentlyInfectedSevere * (2 ** math.trunc(weeks_infections_days/3))
+        severeImpact['infectionsByRequestedTime'] = severe_week_infections
 
-    }
+    elif data['periodType'] == 'months':
+        month_days = time * 30
+        infections_by_month = currentlyInfectedImpact * 2(2**math.trunc(month_days/3))
+        impact['infectionsByRequestedTime'] = infections_by_month
+
+        severe_months_infections = currentlyInfectedSevere * 2(2**math.trunc(month_days/3))
+        severeImpact['infectionsByRequestedTime'] = severe_months_infections
+
