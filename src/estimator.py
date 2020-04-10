@@ -1,8 +1,14 @@
 def estimator(data):
-    impact = {}
-    severeImpact = {}
-    impact.currentlyInfected = data['reportedCases'] * 10
-    severeImpact.currentlyInfected = data['reportedCases'] * 50
-    impact.infectionsByRequestedTime = impact['currentlyInfected'] * 2 ** 9
-    severeImpact.infectionsByRequestedTime = severeImpact['currentlyInfected'] * 2 ** 9
+    impact_current_infections = data['reportedCases'] * 10
+    severe_impact_infected = data['reportedCases'] * 50
+    return {
+        'impact': {
+            'currentlyInfected': impact_current_infections,
+            'infectionsByRequestedTime': impact_current_infections * 512
+        },
+        'severeImpact': {
+            'currentlyInfected': severe_impact_infected,
+            'infectionsByRequestedTime': severe_impact_infected * 512
 
+        }
+    }
