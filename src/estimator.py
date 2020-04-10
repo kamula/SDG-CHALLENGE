@@ -13,12 +13,12 @@ def estimator(data):
     # infectionsByRequestedTime for impact['currently infected]
     def infections_by_time(days):
         infections = current_infections()
-        return infections * math.pow(2, math.trunc(days / 3))
+        return infections * math.pow(2, math.trunc(int(days) / 3))
 
     # infections for servere impact
     def infections_by_severe_impact(days):
         infections = more_people()
-        return infections * math.pow(2, math.trunc(days / 3))
+        return infections * math.pow(2, math.trunc(int(days) / 3))
 
     return {
         data: {},
