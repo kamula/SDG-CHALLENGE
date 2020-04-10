@@ -5,7 +5,7 @@ def estimator(data):
     # function to calculate the number of currently infected people
 
     return {
-        data: {},
+        data: data,
         "impact": {
             "currentlyInfected": data['reportedCases'] * 10,
             'infectionsByRequestedTime': (data['reportedCases'] * 10) * math.pow(2,
