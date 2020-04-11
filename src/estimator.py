@@ -1,7 +1,7 @@
 import math
 
 
-def estimator(**data):
+def estimator(data):
     impact = {}
     severeImpact = {}
 
@@ -20,7 +20,7 @@ def estimator(**data):
 
     elif data['periodType'] == 'weeks':
         period_in_days = period * 7
-        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * (2 ** math.trunc(period_in_days / 3))
+        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * math.pow(2, math.trunc(period_in_days / 3))
 
         # severe impacts
         severeImpact['infectionsByRequestedTime'] = severeImpact['currentlyInfected'] * (
@@ -28,10 +28,12 @@ def estimator(**data):
 
     elif data['periodType'] == 'months':
         month_days = period * 30
-        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * (2 ** math.trunc(month_days / 3))
+        impact['infectionsByRequestedTime'] = impact['currentlyInfected'] * math.pow(2, math.trunc(month_days / 3))
 
         # severe impact
         severeImpact['infectionsByRequestedTime'] = severeImpact['currentlyInfected'] * (
-                    2 ** math.trunc(month_days / 3))
+                2 ** math.trunc(month_days / 3))
 
     return impact, severeImpact
+
+
