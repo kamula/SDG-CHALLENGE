@@ -34,6 +34,6 @@ def estimator(data):
         severeImpact['infectionsByRequestedTime'] = severeImpact['currentlyInfected'] * (
                 2 ** math.trunc(month_days / 3))
 
-    return impact, severeImpact
+    
 
 
