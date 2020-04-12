@@ -15,7 +15,9 @@ def estimator(data):
 
     # calculate the number of infections in days, weeks and months
     period = data['timeToElapse']
+    number_of_days = 0
     if data['periodType'] == 'days':
+        number_of_days = period
         estimate['impact']['infectionsByRequestedTime'] = estimate['impact']['currentlyInfected'] * (
                 2 ** math.trunc(period / 3))
 
@@ -24,6 +26,7 @@ def estimator(data):
 
     elif data['periodType'] == 'weeks':
         period_in_days = period * 7
+        number_of_days = period_in_days
         estimate['impact']['infectionsByRequestedTime'] = estimate['impact']['currentlyInfected'] * math.pow(2,
                                                                                                              math.trunc(
                                                                                                                  period_in_days / 3))
@@ -34,6 +37,7 @@ def estimator(data):
 
     elif data['periodType'] == 'months':
         month_days = period * 30
+        number_of_days = month_days
         estimate['impact']['infectionsByRequestedTime'] = estimate['impact']['currentlyInfected'] * math.pow(2,
                                                                                                              math.trunc(
                                                                                                                  month_days / 3))
@@ -52,14 +56,38 @@ def estimator(data):
     estimate['severeImpact']['severeCasesByRequestedTime'] = severe_fifteen_percent
 
     # hospital beds by request time
-    estimate['impact']['hospitalBedsByRequestedTime'] = math.trunc(data['totalHospitalBeds'] * 0.35 - estimate['impact'][
+    estimate['impact']['hospitalBedsByRequestedTime'] = math.trunc(
+        data['totalHospitalBeds'] * 0.35 - estimate['impact'][
             'severeCasesByRequestedTime'])
-    estimate['severeImpact']['hospitalBedsByRequestedTime'] = math.trunc(data['totalHospitalBeds'] * 0.35 - estimate['severeImpact'][
+    estimate['severeImpact']['hospitalBedsByRequestedTime'] = math.trunc(
+        data['totalHospitalBeds'] * 0.35 - estimate['severeImpact'][
             'severeCasesByRequestedTime'])
+
+    # challenge 3
+    # 5% of infections by requested time
+    estimate['impact']['casesForICUByRequestedTime'] = math.trunc(0.05 * estimate['impact'][
+        'infectionsByRequestedTime'])
+
+    estimate['severeImpact']['casesForICUByRequestedTime'] = math.trunc(0.05 * estimate['severeImpact'][
+        'infectionsByRequestedTime'])
+
+    # 2% of infectionsByRequestedTime
+    estimate['impact']['casesForVentilatorsByRequestedTime'] = math.trunc(0.02 * estimate['impact'][
+        'infectionsByRequestedTime'])
+
+    estimate['severeImpact']['casesForVentilatorsByRequestedTime'] = math.trunc(0.02 * estimate['severeImpact'][
+        'infectionsByRequestedTime'])
+    # dollars in flight
+
+    dollars = estimate['impact']['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data[
+        'region']['avgDailyIncomeInUSD'] * number_of_days
+    estimate['impact']['dollarsInFlight'] = round(dollars, 2)
+
+    dollars_severe = estimate['severeImpact']['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data[
+        'region']['avgDailyIncomeInUSD'] * number_of_days
+    estimate['severeImpact']['dollarsInFlight'] = round(dollars_severe, 2)
 
     return estimate
-
-
 
 
 
