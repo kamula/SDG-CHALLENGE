@@ -52,9 +52,9 @@ def estimator(data):
     estimate['severeImpact']['severeCasesByRequestedTime'] = severe_fifteen_percent
 
     # hospital beds by request time
-    estimate['impact']['hospitalBedsByRequestedTime'] = math.trunc(data['totalHospitalBeds'] * 0.35) - estimate['impact'][
+    estimate['impact']['hospitalBedsByRequestedTime'] = data['totalHospitalBeds'] * 0.35 - estimate['impact'][
             'severeCasesByRequestedTime']
-    estimate['severeImpact']['hospitalBedsByRequestedTime'] = math.trunc(data['totalHospitalBeds'] * 0.35) - estimate['severeImpact'][
+    estimate['severeImpact']['hospitalBedsByRequestedTime'] = data['totalHospitalBeds'] * 0.35 - estimate['severeImpact'][
             'severeCasesByRequestedTime']
 
     return estimate
