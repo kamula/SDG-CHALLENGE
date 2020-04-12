@@ -81,10 +81,10 @@ def estimator(data):
 
     dollars = math.trunc(estimate['impact']['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data[
         'region']['avgDailyIncomeInUSD'] * number_of_days)
-    estimate['impact']['dollarsInFlight'] = round(dollars, 2)
+    estimate['impact']['dollarsInFlight'] = dollars
 
     dollars_severe = math.trunc(estimate['severeImpact']['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data[
         'region']['avgDailyIncomeInUSD'] * number_of_days)
-    estimate['severeImpact']['dollarsInFlight'] = round(dollars_severe, 2)
+    estimate['severeImpact']['dollarsInFlight'] = dollars_severe
 
     return estimate
