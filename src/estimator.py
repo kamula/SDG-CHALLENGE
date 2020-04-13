@@ -82,11 +82,11 @@ def estimator(data):
     average_daily_income_in_usd = data['region']['avgDailyIncomeInUSD']
 
     dollars = estimate['impact'][
-                  'infectionsByRequestedTime'] * average_daily_income_in_population * average_daily_income_in_usd * number_of_days
+                  'infectionsByRequestedTime'] * average_daily_income_in_population * average_daily_income_in_usd / number_of_days
     estimate['impact']['dollarsInFlight'] = round(dollars, 2)
 
     dollars_severe = estimate['severeImpact'][
-                         'infectionsByRequestedTime'] * average_daily_income_in_population * average_daily_income_in_usd * number_of_days
+                         'infectionsByRequestedTime'] * average_daily_income_in_population * average_daily_income_in_usd / number_of_days
     estimate['severeImpact']['dollarsInFlight'] = round(dollars_severe, 2)
 
     return estimate
