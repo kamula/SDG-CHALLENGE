@@ -65,17 +65,17 @@ def estimator(data):
 
     # challenge 3
     # 5% of infections by requested time
-    estimate['impact']['casesForICUByRequestedTime'] = math.trunc(0.05 * estimate['impact'][
+    estimate['impact']['casesForICUByRequestedTime'] = int(0.05 * estimate['impact'][
         'infectionsByRequestedTime'])
 
-    estimate['severeImpact']['casesForICUByRequestedTime'] = math.trunc(0.05 * estimate['severeImpact'][
+    estimate['severeImpact']['casesForICUByRequestedTime'] = int(0.05 * estimate['severeImpact'][
         'infectionsByRequestedTime'])
 
     # 2% of infectionsByRequestedTime
-    estimate['impact']['casesForVentilatorsByRequestedTime'] = math.trunc(0.02 * estimate['impact'][
+    estimate['impact']['casesForVentilatorsByRequestedTime'] = int(0.02 * estimate['impact'][
         'infectionsByRequestedTime'])
 
-    estimate['severeImpact']['casesForVentilatorsByRequestedTime'] = math.trunc(0.02 * estimate['severeImpact'][
+    estimate['severeImpact']['casesForVentilatorsByRequestedTime'] = int(0.02 * estimate['severeImpact'][
         'infectionsByRequestedTime'])
     # dollars in flight
     average_daily_income_in_population = data['region']['avgDailyIncomePopulation']
@@ -83,13 +83,10 @@ def estimator(data):
 
     dollars = estimate['impact'][
                   'infectionsByRequestedTime'] * average_daily_income_in_population * average_daily_income_in_usd * number_of_days
-    estimate['impact']['dollarsInFlight'] = float(dollars)
+    estimate['impact']['dollarsInFlight'] = round(dollars, 2)
 
     dollars_severe = estimate['severeImpact'][
                          'infectionsByRequestedTime'] * average_daily_income_in_population * average_daily_income_in_usd * number_of_days
-    estimate['severeImpact']['dollarsInFlight'] = float(dollars_severe)
+    estimate['severeImpact']['dollarsInFlight'] = round(dollars_severe, 2)
 
     return estimate
-
-
-
