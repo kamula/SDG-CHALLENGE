@@ -78,13 +78,14 @@ def estimator(data):
     estimate['severeImpact']['casesForVentilatorsByRequestedTime'] = math.trunc(0.02 * estimate['severeImpact'][
         'infectionsByRequestedTime'])
     # dollars in flight
-
-    dollars = math.trunc(estimate['impact']['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data[
-        'region']['avgDailyIncomeInUSD'] * number_of_days)
+    average_daily_income_in_population = data['region']['avgDailyIncomePopulation']
+    average_daily_income_in_usd = data['region']['avgDailyIncomeInUSD']
+    dollars = math.trunc(estimate['impact']['infectionsByRequestedTime'] * average_daily_income_in_population *
+                         average_daily_income_in_usd * number_of_days)
     estimate['impact']['dollarsInFlight'] = dollars
 
-    dollars_severe = math.trunc(estimate['severeImpact']['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data[
-        'region']['avgDailyIncomeInUSD'] * number_of_days)
+    dollars_severe = math.trunc(estimate['severeImpact']['infectionsByRequestedTime'] *
+                                average_daily_income_in_population * average_daily_income_in_usd * number_of_days)
     estimate['severeImpact']['dollarsInFlight'] = dollars_severe
 
     return estimate
